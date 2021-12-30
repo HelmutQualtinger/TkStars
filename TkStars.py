@@ -40,17 +40,14 @@ def BackGround():
     """
     Runs in Background slightly moves the stars and reschedules it self
     """
-
-
-
-#    print("Backgound")
-    global StarNum
+    print("Backgound")
+    global StarID
     for star in range(StarNum):
-
+        pass
         if random.random()<0.01:
             x = int(random.randint(-10, 10))
             y = int(random.randint(-8, 8))
-            w.move("Star" + str(star), x, y)
+            w.move("Star"+str(star), x, y)
             color = [random.randint(0, 255) for i in range(3)]
             rgb = rgb_hack(color)  # translate colors into something tk under stands
             w.itemconfig("Star"+str(star),fill=rgb)
@@ -62,8 +59,8 @@ def BackGround():
 
         x = int(random.randint(-1, 1))
         y = int(random.randint(-1, 1))
-        w.move("Star" + str(star), x, y)
-    master.after(100, BackGround)
+        w.move("Star"+str(star), x, y)
+    master.after(10, BackGround)
 
 
 master = Tk()  # init tk
@@ -80,10 +77,9 @@ for stars in range(random.randint(800, 1600)):  # create random number of stars
     steps = random.randint(4, 10)
     size = random.randint(5, 50)
     color = [random.randint(0, 255) for i in range(3)]
-    color=[0,0,0]
     rgb = rgb_hack(color)    # translate colors into something tk under stands
     DrawStar(w, (xp, yp), steps, size, rgb)
-    if uc%10==0: master.update()   # let the stars appear gradually
+    if uc%1==0: master.update()   # let the stars appear gradually
     uc+=1
 master.after(10,BackGround)      # schedule Braunian movement of stars
 w.postscript(file="Stars.ps")    # print a file as a souvenir
