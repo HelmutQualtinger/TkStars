@@ -31,7 +31,7 @@ def DrawStar(w, pos, divisions, size, color):
                       px - x[i], py,
                       px, py - y[i],
                       x[i] + px, py,
-                      fill=color,width=1,tag="Star"+str(StarNum))
+                      fill="black",width=1,tag="Star"+str(StarNum))
 
     StarNum+=1
     return
@@ -44,7 +44,7 @@ def BackGround():
     global StarID
     for star in range(StarNum):
         pass
-        if random.random()<0.01:
+        if random.random()<0.001:
             x = int(random.randint(-10, 10))
             y = int(random.randint(-8, 8))
             w.move("Star"+str(star), x, y)
@@ -52,7 +52,7 @@ def BackGround():
             rgb = rgb_hack(color)  # translate colors into something tk under stands
             w.itemconfig("Star"+str(star),fill=rgb)
 
-        if random.random()<0.02:
+        if random.random()<0.001:
             color = [random.randint(0, 255) for i in range(3)]
             rgb = rgb_hack(color)  # translate colors into something tk under stands
             w.itemconfig("Star"+str(star),fill="black")
@@ -60,7 +60,7 @@ def BackGround():
         x = int(random.randint(-1, 1))
         y = int(random.randint(-1, 1))
         w.move("Star"+str(star), x, y)
-    master.after(10, BackGround)
+    master.after(100, BackGround)
 
 
 master = Tk()  # init tk
@@ -71,15 +71,15 @@ w = Canvas(master, width=canvas_width, height=canvas_height, bg="black")
 w.pack()  # create and place canvas
 uc=0
 w.create_rectangle(0,0,canvas_width,canvas_height,fill="#000020") # draw very darkblue sky to also appear on print
-for stars in range(random.randint(800, 1600)):  # create random number of stars
+for stars in range(random.randint(100, 200)):  # create random number of stars
     xp = random.randint(0, canvas_width)       # with random attributes
     yp = random.randint(0, canvas_height)
     steps = random.randint(4, 10)
-    size = random.randint(5, 50)
+    size = random.randint(5, 150)
     color = [random.randint(0, 255) for i in range(3)]
     rgb = rgb_hack(color)    # translate colors into something tk under stands
     DrawStar(w, (xp, yp), steps, size, rgb)
-    if uc%1==0: master.update()   # let the stars appear gradually
+    if uc%20==0: master.update()   # let the stars appear gradually
     uc+=1
 master.after(10,BackGround)      # schedule Braunian movement of stars
 w.postscript(file="Stars.ps")    # print a file as a souvenir
